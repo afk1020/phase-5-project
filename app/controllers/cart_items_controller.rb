@@ -11,12 +11,12 @@ class CartItemsController < ApplicationController
         if found_item
             # found_item.quantity += 1
             found_item.quantity += cart_item_params[:quantity].to_i
-            found_item.item_price = found_item.quantity * found_item.product.price
+            found_item.item_price = found_item.quantity * found_item.product.price_dollars
             found_item.save
             
         else
             cartItem = CartItem.create(cart_item_params)
-            cartItem.item_price = cartItem.quantity * cartItem.product.price
+            cartItem.item_price = cartItem.quantity * cartItem.product.price_dollars
             cartItem.save
             # order.total_price += orderItem.item_price
             # order.save

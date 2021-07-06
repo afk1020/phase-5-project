@@ -1,8 +1,9 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :current_cart, :current_carts
+  attributes :id, :name, :email, :current_cart
 
-  # Once you've built out the current_orders method, go and rewrite our frontend logic
+  # Once you've built out the current_carts method, go and rewrite our frontend logic
   has_many :carts
+  has_many :cart_items, through: :carts
   # :user_cart(cart)
 
 end
