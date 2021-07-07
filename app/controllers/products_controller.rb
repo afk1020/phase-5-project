@@ -5,8 +5,9 @@ class ProductsController < ApplicationController
     end
     
     def show
-        # product = Product.find(params[:id].to_i)
-        # render json: product, include: "**"
-        render json: @products
+        product = Product.find(params[:id].to_i)
+        render json: product, include: "**"
+        # products = Product.all
+        # render json: products
     end
 end

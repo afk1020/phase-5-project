@@ -1,5 +1,5 @@
-import React from 'react'
-import ProductsCard from '../components/ProductsCard.js';
+import React from 'react';
+import ProductsCard from './Components/ProductsCard'
 
 const Products = (props) => {
     return(
@@ -7,7 +7,7 @@ const Products = (props) => {
         <div className="products_Collection">
            {props.productData.map(product => {
             return <ProductsCard
-            Product ={product}
+            product ={product}
             key = {product.id}
             //handleClick = {}
             />

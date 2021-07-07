@@ -4,6 +4,7 @@ import './App.css';
 //import Header from './Components/Header';
 import SignUp from './Components/SignUp'
 import LoginForm from './Components/LoginForm'
+import Products from './Products';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
 import Home from './Home';
@@ -14,11 +15,12 @@ import {
   Link
 } from "react-router-dom";
 
-let productsURL = "http://localhost:3000/products"
+let productsURL = "/products"
 
 class App extends Component{
 state = {
   products:[],
+  total: 0,
   users:[],
     name: "",
     email: "",
@@ -27,21 +29,47 @@ state = {
     error: "",
 }
 
-adminUser = {
-  email:"admin@admin.com",
-  password:"admin123"
+// adminUser = {
+//   email:"admin@admin.com",
+//   password:"admin123"
+// }
+
+
+  // console.log(products)
+
+componentDidMount () {
+  fetch("/products")
+			   .then((r) => r.json())
+			   .then((data) => this.setState({products: data}))
+}
+  
+componentDidMount() {
+  let cart = localStorage.getItem('cart');
+  if (!cart) return; 
+  getCartProducts(cart).then((products) => {
+    let total = 0;
+    for (var i = 0; i < products.length; i++) {
+      total += products[i].price * products[i].qty;
+    }
+    this.setState({ products, total });
+    });
 }
 
-handleProducts = (productData) =>{
-  this.setState({
-    products: productData
-  })
+removeFromCart = (product) => {
+  let products = this.state.products.filter((item) => item.id !== product.id);
+  let cart = JSON.parse(localStorage.getItem('cart'));
+  delete cart[product.id.toString()];
+  localStorage.setItem('cart', JSON.stringify(cart));
+  let total = this.state.total - (product.qty * product.price) 
+  this.setState({products, total});
 }
 
-componentDidMount = () => {
-  axios.get(productsURL, {crossDomain: true}, {withCredentials: true})
-    .then((response) => this.handleProducts(response.data.products))
+clearCart = () => {
+  localStorage.removeItem('cart');
+  this.setState({products: []});
 }
+
+
 
 // Login = details => {
  
@@ -84,8 +112,8 @@ componentDidMount = () => {
         />
         </Route>
         <Route path="/products">
-        <products
-        handleProducts={this.handleProducts}/>
+        <Products
+        productData={this.state.products}/>
         </Route>
         </Switch>
        </Router>
