@@ -43,31 +43,31 @@ componentDidMount () {
 			   .then((data) => this.setState({products: data}))
 }
   
-componentDidMount() {
-  let cart = localStorage.getItem('cart');
-  if (!cart) return; 
-  getCartProducts(cart).then((products) => {
-    let total = 0;
-    for (var i = 0; i < products.length; i++) {
-      total += products[i].price * products[i].qty;
-    }
-    this.setState({ products, total });
-    });
-}
+// componentDidMount() {
+//   let cart = localStorage.getItem('cart');
+//   if (!cart) return; 
+//   getCartProducts(cart).then((products) => {
+//     let total = 0;
+//     for (var i = 0; i < products.length; i++) {
+//       total += products[i].price * products[i].qty;
+//     }
+//     this.setState({ products, total });
+//     });
+// }
 
-removeFromCart = (product) => {
-  let products = this.state.products.filter((item) => item.id !== product.id);
-  let cart = JSON.parse(localStorage.getItem('cart'));
-  delete cart[product.id.toString()];
-  localStorage.setItem('cart', JSON.stringify(cart));
-  let total = this.state.total - (product.qty * product.price) 
-  this.setState({products, total});
-}
+// removeFromCart = (product) => {
+//   let products = this.state.products.filter((item) => item.id !== product.id);
+//   let cart = JSON.parse(localStorage.getItem('cart'));
+//   delete cart[product.id.toString()];
+//   localStorage.setItem('cart', JSON.stringify(cart));
+//   let total = this.state.total - (product.qty * product.price) 
+//   this.setState({products, total});
+// }
 
-clearCart = () => {
-  localStorage.removeItem('cart');
-  this.setState({products: []});
-}
+// clearCart = () => {
+//   localStorage.removeItem('cart');
+//   this.setState({products: []});
+// }
 
 
 
