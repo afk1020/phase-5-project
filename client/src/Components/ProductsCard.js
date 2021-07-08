@@ -14,7 +14,11 @@ class ProductsCard extends Component {
   ]
     render() {
     return (
-      <div className="products-card" key={this.props.product.id}>
+      <div className="products-card" 
+      key={this.props.product.id}
+      
+        //this.props.handleClick()}
+      >
         <div className="image-container">
         <img src={`${this.productsArray[Math.floor(Math.random()*this.productsArray.length)]}`}></img> 
         
@@ -28,14 +32,14 @@ class ProductsCard extends Component {
         <p><span style={{fontWeight: "bold"}}>description: </span> {this.props.product.description} </p>
         <p><span style={{fontWeight: "bold"}}>quantity: </span>{this.props.product.quantity} </p>
       </div>
-      <div className="btnn" >
-      <Link to='/cart'>
+      <div className="btnn" 
+      onClick = {this.props.handleClick}>
+      
           <button>
             <a>
               Add to cart
             </a>
           </button>
-        </Link>
       </div>
       </div>
       </div>

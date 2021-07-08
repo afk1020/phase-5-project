@@ -4,7 +4,7 @@ import './App.css';
 //import Header from './Components/Header';
 import SignUp from './Components/SignUp'
 import LoginForm from './Components/LoginForm'
-import Products from './Products';
+import Products from './Containers/Products';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
 import Home from './Home';
@@ -14,6 +14,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Cart from './Containers/Cart';
 
 let productsURL = "/products"
 
@@ -27,6 +28,7 @@ state = {
     isLogged: false,
     currentUser: {},
     error: "",
+    myCart: []
 }
 
 // adminUser = {
@@ -42,7 +44,18 @@ componentDidMount () {
 			   .then((r) => r.json())
 			   .then((data) => this.setState({products: data}))
 }
-  
+
+addProduct =(product) => {
+  if(!this.state.myCart.find(oldProduct => product === oldProduct)){
+  this.setState({myCart:[...this.state.myCart, product]})}
+}
+removeProduct = (product) => {
+  this.setState({
+    myCart:this.state.myCart.filter(oldProduct => oldProduct !== product)
+  })
+}
+
+
 // componentDidMount() {
 //   let cart = localStorage.getItem('cart');
 //   if (!cart) return; 
@@ -113,7 +126,16 @@ componentDidMount () {
         </Route>
         <Route path="/products">
         <Products
-        productData={this.state.products}/>
+        productData={this.state.products}
+        addProduct={this.addProduct}
+        />
+        </Route>
+        <Route path="/cart">
+        <Cart
+        myCart={this.state.myCart}
+        removeProduct={this.removeProduct}
+        />
+
         </Route>
         </Switch>
        </Router>
